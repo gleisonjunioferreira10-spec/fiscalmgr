@@ -17,7 +17,7 @@ class ProdutoBase(BaseModel):
 
 
 class ProdutoCreate(ProdutoBase):
-    empresa_id: uuid.UUID
+    pass
 
 
 class ProdutoUpdate(BaseModel):

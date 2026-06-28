@@ -7,6 +7,10 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = "postgresql+psycopg2://postgres:postgres@db:5432/gerente_fiscal"
 
+    JWT_SECRET_KEY: str = "change-me-in-production"
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRE_MINUTES: int = 60 * 12
+
     class Config:
         env_file = ".env"
 

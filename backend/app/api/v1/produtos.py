@@ -3,6 +3,7 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.core.deps import get_current_empresa_id
 from app.db.session import get_db
 from app.models.produto import Produto
 from app.modules.tributario.service import sugerir_classificacao_fiscal
@@ -17,9 +18,20 @@ def _atualizar_status_cadastro(produto: Produto) -> None:
     produto.cadastro_completo = all(getattr(produto, campo) for campo in CAMPOS_OBRIGATORIOS)
 
 
+def _obter_produto_da_empresa(db: Session, produto_id: uuid.UUID, empresa_id: uuid.UUID) -> Produto:
+    produto = db.get(Produto, produto_id)
+    if not produto or produto.empresa_id != empresa_id:
+        raise HTTPException(status_code=404, detail="Produto não encontrado")
+    return produto
+
+
 @router.post("", response_model=ProdutoOut, status_code=201)
-def criar_produto(payload: ProdutoCreate, db: Session = Depends(get_db)):
-    produto = Produto(**payload.model_dump())
+def criar_produto(
+    payload: ProdutoCreate,
+    db: Session = Depends(get_db),
+    empresa_id: uuid.UUID = Depends(get_current_empresa_id),
+):
+    produto = Produto(**payload.model_dump(), empresa_id=empresa_id)
     _atualizar_status_cadastro(produto)
     db.add(produto)
     db.commit()
@@ -28,23 +40,30 @@ def criar_produto(payload: ProdutoCreate, db: Session = Depends(get_db)):
 
 
 @router.get("", response_model=list[ProdutoOut])
-def listar_produtos(empresa_id: uuid.UUID, db: Session = Depends(get_db)):
+def listar_produtos(
+    db: Session = Depends(get_db),
+    empresa_id: uuid.UUID = Depends(get_current_empresa_id),
+):
     return db.query(Produto).filter(Produto.empresa_id == empresa_id).all()
 
 
 @router.get("/{produto_id}", response_model=ProdutoOut)
-def obter_produto(produto_id: uuid.UUID, db: Session = Depends(get_db)):
-    produto = db.get(Produto, produto_id)
-    if not produto:
-        raise HTTPException(status_code=404, detail="Produto não encontrado")
-    return produto
+def obter_produto(
+    produto_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    empresa_id: uuid.UUID = Depends(get_current_empresa_id),
+):
+    return _obter_produto_da_empresa(db, produto_id, empresa_id)
 
 
 @router.patch("/{produto_id}", response_model=ProdutoOut)
-def atualizar_produto(produto_id: uuid.UUID, payload: ProdutoUpdate, db: Session = Depends(get_db)):
-    produto = db.get(Produto, produto_id)
-    if not produto:
-        raise HTTPException(status_code=404, detail="Produto não encontrado")
+def atualizar_produto(
+    produto_id: uuid.UUID,
+    payload: ProdutoUpdate,
+    db: Session = Depends(get_db),
+    empresa_id: uuid.UUID = Depends(get_current_empresa_id),
+):
+    produto = _obter_produto_da_empresa(db, produto_id, empresa_id)
 
     for campo, valor in payload.model_dump(exclude_unset=True).items():
         setattr(produto, campo, valor)
@@ -56,8 +75,10 @@ def atualizar_produto(produto_id: uuid.UUID, payload: ProdutoUpdate, db: Session
 
 
 @router.get("/{produto_id}/sugestao-fiscal")
-def sugestao_fiscal(produto_id: uuid.UUID, db: Session = Depends(get_db)):
-    produto = db.get(Produto, produto_id)
-    if not produto:
-        raise HTTPException(status_code=404, detail="Produto não encontrado")
+def sugestao_fiscal(
+    produto_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    empresa_id: uuid.UUID = Depends(get_current_empresa_id),
+):
+    produto = _obter_produto_da_empresa(db, produto_id, empresa_id)
     return sugerir_classificacao_fiscal(produto)
