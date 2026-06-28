@@ -14,10 +14,7 @@ export default function Produtos() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
 
   useEffect(() => {
-    const empresaId = localStorage.getItem("empresa_id");
-    if (!empresaId) return;
-    api.get<Produto[]>("/produtos", { params: { empresa_id: empresaId } })
-      .then((res) => setProdutos(res.data));
+    api.get<Produto[]>("/produtos").then((res) => setProdutos(res.data));
   }, []);
 
   return (

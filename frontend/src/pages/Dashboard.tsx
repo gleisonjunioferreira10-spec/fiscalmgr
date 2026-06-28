@@ -12,10 +12,7 @@ export default function Dashboard() {
   const [resumo, setResumo] = useState<ResumoAuditoria | null>(null);
 
   useEffect(() => {
-    const empresaId = localStorage.getItem("empresa_id");
-    if (!empresaId) return;
-    api.get<ResumoAuditoria>("/dashboard/auditoria", { params: { empresa_id: empresaId } })
-      .then((res) => setResumo(res.data));
+    api.get<ResumoAuditoria>("/dashboard/auditoria").then((res) => setResumo(res.data));
   }, []);
 
   if (!resumo) return <p>Carregando dashboard fiscal...</p>;
