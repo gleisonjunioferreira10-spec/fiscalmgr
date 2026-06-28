@@ -1,11 +1,12 @@
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
 from app.core.deps import get_current_empresa_id
 from app.db.session import get_db
 from app.models.produto import Produto
+from app.modules.produtos.importacao import ImportacaoInvalidaError, importar_produtos_csv
 from app.modules.tributario.service import sugerir_classificacao_fiscal
 from app.schemas.produto import ProdutoCreate, ProdutoOut, ProdutoUpdate
 
@@ -45,6 +46,19 @@ def listar_produtos(
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     return db.query(Produto).filter(Produto.empresa_id == empresa_id).all()
+
+
+@router.post("/importar")
+async def importar_produtos(
+    arquivo: UploadFile,
+    db: Session = Depends(get_db),
+    empresa_id: uuid.UUID = Depends(get_current_empresa_id),
+):
+    conteudo = await arquivo.read()
+    try:
+        return importar_produtos_csv(db, empresa_id, conteudo)
+    except ImportacaoInvalidaError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @router.get("/{produto_id}", response_model=ProdutoOut)
