@@ -23,6 +23,18 @@ def criar_regra(
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     _validar_produto_da_empresa(db, payload.produto_id, empresa_id)
+
+    ja_existe = (
+        db.query(RegraTributariaUF)
+        .filter(
+            RegraTributariaUF.produto_id == payload.produto_id,
+            RegraTributariaUF.uf_destino == payload.uf_destino,
+        )
+        .first()
+    )
+    if ja_existe:
+        raise HTTPException(status_code=409, detail="Já existe regra cadastrada para esta UF de destino")
+
     regra = RegraTributariaUF(**payload.model_dump())
     db.add(regra)
     db.commit()

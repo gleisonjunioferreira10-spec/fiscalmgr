@@ -31,6 +31,14 @@ def criar_produto(
     db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
+    ja_existe = (
+        db.query(Produto)
+        .filter(Produto.empresa_id == empresa_id, Produto.sku == payload.sku)
+        .first()
+    )
+    if ja_existe:
+        raise HTTPException(status_code=409, detail="SKU já cadastrado para esta empresa")
+
     produto = Produto(**payload.model_dump(), empresa_id=empresa_id)
     _atualizar_status_cadastro(produto)
     db.add(produto)
