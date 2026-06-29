@@ -37,6 +37,21 @@ Para aplicar as migrations:
 docker-compose exec backend alembic upgrade head
 ```
 
+Antes de subir, copie `backend/.env.example` para `backend/.env` e gere uma `JWT_SECRET_KEY`
+única (`python3 -c "import secrets; print(secrets.token_hex(32))"`) — a aplicação não inicia
+sem esse valor configurado.
+
+## Testes
+
+```bash
+cd backend
+pip install -r requirements.txt
+pytest
+```
+
+A suíte inclui testes de isolamento multi-tenant (`tests/test_tenant_isolation.py`), que
+garantem que uma empresa nunca acessa dados de outra em nenhum endpoint.
+
 ## Estrutura
 
 ```

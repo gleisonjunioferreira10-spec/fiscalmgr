@@ -35,10 +35,21 @@ por outros canais no futuro (ex.: worker assíncrono, job de IA) sem duplicar re
 
 ## Multi-tenant
 
-Toda entidade de domínio carrega `empresa_id`. Os endpoints de listagem e o dashboard
-exigem esse parâmetro. Para v2, considerar:
-- Row-Level Security no Postgres por `empresa_id`.
-- Autenticação/autorização (JWT) anexando `empresa_id` ao contexto da requisição.
+Toda entidade de domínio carrega `empresa_id`, derivado do JWT (não de parâmetro de
+requisição) via `get_current_empresa_id`. O isolamento é garantido em duas camadas:
+
+1. **Aplicação**: toda query em `modules`/`api` filtra explicitamente por `empresa_id`.
+2. **Banco (defesa em profundidade)**: Row-Level Security no Postgres em `produtos`,
+   `regras_tributarias_uf` e `validacoes_fiscais` (migration `0003_rls`), via
+   `FORCE ROW LEVEL SECURITY` + policy comparando com `current_setting('app.current_empresa_id')`.
+   A dependência `get_db_tenant` (`app/core/deps.py`) executa `SET LOCAL app.current_empresa_id`
+   no início de cada requisição autenticada, antes de qualquer query.
+
+**Atenção operacional**: o Postgres ignora RLS para roles `SUPERUSER`, mesmo com `FORCE`.
+A role de conexão da aplicação em produção **não pode ser superuser nem dono das tabelas**
+(`postgres` do `docker-compose.yml` é apenas para desenvolvimento local). Em produção, criar
+uma role dedicada (`LOGIN`, sem `SUPERUSER`, sem `BYPASSRLS`) com `GRANT` explícito nas tabelas,
+de propriedade de outra role (ex.: a role usada nas migrations).
 
 ## Módulos de negócio (MVP)
 

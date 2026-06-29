@@ -3,8 +3,7 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from app.core.deps import get_current_empresa_id
-from app.db.session import get_db
+from app.core.deps import get_current_empresa_id, get_db_tenant
 from app.models.produto import Produto, RegraTributariaUF
 from app.schemas.regra_uf import RegraTributariaUFCreate, RegraTributariaUFOut
 
@@ -20,7 +19,7 @@ def _validar_produto_da_empresa(db: Session, produto_id: uuid.UUID, empresa_id: 
 @router.post("", response_model=RegraTributariaUFOut, status_code=201)
 def criar_regra(
     payload: RegraTributariaUFCreate,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     _validar_produto_da_empresa(db, payload.produto_id, empresa_id)
@@ -34,7 +33,7 @@ def criar_regra(
 @router.get("", response_model=list[RegraTributariaUFOut])
 def listar_regras(
     produto_id: uuid.UUID,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     _validar_produto_da_empresa(db, produto_id, empresa_id)
@@ -44,7 +43,7 @@ def listar_regras(
 @router.delete("/{regra_id}", status_code=204)
 def remover_regra(
     regra_id: uuid.UUID,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     regra = db.get(RegraTributariaUF, regra_id)

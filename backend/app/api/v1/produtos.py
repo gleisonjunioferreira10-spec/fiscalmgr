@@ -3,8 +3,7 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
-from app.core.deps import get_current_empresa_id
-from app.db.session import get_db
+from app.core.deps import get_current_empresa_id, get_db_tenant
 from app.models.produto import Produto
 from app.modules.produtos.importacao import ImportacaoInvalidaError, importar_produtos_csv
 from app.modules.tributario.service import sugerir_classificacao_fiscal
@@ -29,7 +28,7 @@ def _obter_produto_da_empresa(db: Session, produto_id: uuid.UUID, empresa_id: uu
 @router.post("", response_model=ProdutoOut, status_code=201)
 def criar_produto(
     payload: ProdutoCreate,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     produto = Produto(**payload.model_dump(), empresa_id=empresa_id)
@@ -42,7 +41,7 @@ def criar_produto(
 
 @router.get("", response_model=list[ProdutoOut])
 def listar_produtos(
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     return db.query(Produto).filter(Produto.empresa_id == empresa_id).all()
@@ -51,7 +50,7 @@ def listar_produtos(
 @router.post("/importar")
 async def importar_produtos(
     arquivo: UploadFile,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     conteudo = await arquivo.read()
@@ -64,7 +63,7 @@ async def importar_produtos(
 @router.get("/{produto_id}", response_model=ProdutoOut)
 def obter_produto(
     produto_id: uuid.UUID,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     return _obter_produto_da_empresa(db, produto_id, empresa_id)
@@ -74,7 +73,7 @@ def obter_produto(
 def atualizar_produto(
     produto_id: uuid.UUID,
     payload: ProdutoUpdate,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     produto = _obter_produto_da_empresa(db, produto_id, empresa_id)
@@ -91,7 +90,7 @@ def atualizar_produto(
 @router.get("/{produto_id}/sugestao-fiscal")
 def sugestao_fiscal(
     produto_id: uuid.UUID,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db_tenant),
     empresa_id: uuid.UUID = Depends(get_current_empresa_id),
 ):
     produto = _obter_produto_da_empresa(db, produto_id, empresa_id)

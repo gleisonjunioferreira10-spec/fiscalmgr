@@ -21,7 +21,7 @@ def upgrade() -> None:
     op.create_table(
         "produtos",
         sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
-        sa.Column("empresa_id", postgresql.UUID(as_uuid=True), nullable=False, index=True),
+        sa.Column("empresa_id", postgresql.UUID(as_uuid=True), nullable=False),
         sa.Column("sku", sa.String(64), nullable=False),
         sa.Column("descricao", sa.String(255), nullable=False),
         sa.Column("ncm", sa.String(8)),
