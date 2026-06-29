@@ -1,3 +1,4 @@
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -13,6 +14,15 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+
+    @field_validator("DATABASE_URL")
+    @classmethod
+    def _normalizar_driver_postgres(cls, valor: str) -> str:
+        if valor.startswith("postgres://"):
+            return valor.replace("postgres://", "postgresql+psycopg2://", 1)
+        if valor.startswith("postgresql://"):
+            return valor.replace("postgresql://", "postgresql+psycopg2://", 1)
+        return valor
 
 
 settings = Settings()
