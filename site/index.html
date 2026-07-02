@@ -12,17 +12,18 @@
 
   <header class="header" id="topo">
     <div class="container header__inner">
-      <a href="#topo" class="logo">MGR <span>Atacado e Varejo</span></a>
+      <a href="index.html" class="logo">MGR <span>Atacado e Varejo</span></a>
 
       <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
 
       <nav class="nav" id="nav">
-        <a href="#sobre">Sobre</a>
-        <a href="#diferenciais">Diferenciais</a>
-        <a href="#produtos">Produtos</a>
-        <a href="#contato">Contato</a>
+        <a href="index.html" class="nav__link--ativo">Início</a>
+        <a href="historia.html">Nossa História</a>
+        <a href="parceiros.html">Parceiros</a>
+        <a href="produtos.html">Produtos</a>
+        <a href="contato.html">Contato</a>
       </nav>
     </div>
   </header>
@@ -36,22 +37,29 @@
           com variedade de produtos, bom atendimento e condições especiais para quem compra em quantidade.
         </p>
         <div class="hero__actions">
-          <a href="#contato" class="btn btn--primary">Fale conosco</a>
-          <a href="#produtos" class="btn btn--outline">Ver produtos</a>
+          <a href="contato.html" class="btn btn--primary">Fale conosco</a>
+          <a href="produtos.html" class="btn btn--outline">Ver produtos</a>
         </div>
       </div>
     </section>
 
-    <section id="sobre" class="section">
-      <div class="container">
-        <h2 class="section__title">Sobre a MGR</h2>
-        <p class="section__text">
-          A MGR Atacado e Varejo é uma empresa dedicada a oferecer produtos de qualidade
-          com o melhor custo-benefício, atendendo tanto quem compra para revender quanto
-          quem compra para uso próprio. Nosso compromisso é com a variedade, o preço justo
-          e um atendimento próximo do cliente.
-        </p>
-        <!-- Edite este texto com a história e o diferencial real da sua empresa. -->
+    <section class="section">
+      <div class="container teaser">
+        <div class="teaser__texto">
+          <h2 class="section__title">Nossa história</h2>
+          <p class="section__text">
+            De onde viemos e como construímos a confiança de quem compra com a gente,
+            no atacado e no varejo.
+          </p>
+          <a href="historia.html" class="link-saiba-mais">Conheça nossa história →</a>
+        </div>
+        <div class="teaser__texto">
+          <h2 class="section__title">Nossos parceiros</h2>
+          <p class="section__text">
+            Fornecedores e marcas que ajudam a garantir qualidade e variedade em cada compra.
+          </p>
+          <a href="parceiros.html" class="link-saiba-mais">Ver parceiros →</a>
+        </div>
       </div>
     </section>
 
@@ -76,69 +84,6 @@
             <p>Falamos diretamente com você para entender o que precisa.</p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section id="produtos" class="section">
-      <div class="container">
-        <h2 class="section__title">Nossos produtos</h2>
-        <p class="section__text">
-          <!-- Substitua os itens abaixo pelas categorias reais de produtos da MGR. -->
-          Trabalhamos com uma variedade de produtos para atender lojistas e clientes finais.
-          Entre em contato para consultar o catálogo completo e a disponibilidade.
-        </p>
-        <div class="cards">
-          <div class="card">
-            <h3>Categoria 1</h3>
-            <p>Descreva aqui um grupo de produtos que vocês vendem.</p>
-          </div>
-          <div class="card">
-            <h3>Categoria 2</h3>
-            <p>Descreva aqui outro grupo de produtos que vocês vendem.</p>
-          </div>
-          <div class="card">
-            <h3>Categoria 3</h3>
-            <p>Descreva aqui outro grupo de produtos que vocês vendem.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contato" class="section section--alt">
-      <div class="container contato__inner">
-        <div>
-          <h2 class="section__title">Fale com a gente</h2>
-          <p class="section__text">
-            Tire dúvidas, peça um orçamento ou saiba mais sobre nossos produtos.
-          </p>
-          <ul class="contato__lista">
-            <li><strong>WhatsApp:</strong> <a href="https://wa.me/55SEUNUMEROAQUI" target="_blank" rel="noopener">(XX) XXXXX-XXXX</a></li>
-            <li><strong>Telefone:</strong> (XX) XXXX-XXXX</li>
-            <li><strong>E-mail:</strong> <a href="mailto:contato@mgratacado.com.br">contato@mgratacado.com.br</a></li>
-            <li><strong>Endereço:</strong> Rua Exemplo, 123 — Cidade/UF</li>
-            <li><strong>Horário:</strong> Seg. a Sex., 8h às 18h</li>
-          </ul>
-        </div>
-
-        <form class="form" id="formContato">
-          <label>
-            Nome
-            <input type="text" name="nome" required />
-          </label>
-          <label>
-            E-mail ou telefone
-            <input type="text" name="contato" required />
-          </label>
-          <label>
-            Mensagem
-            <textarea name="mensagem" rows="4" required></textarea>
-          </label>
-          <button type="submit" class="btn btn--primary">Enviar mensagem</button>
-          <p class="form__aviso" id="formAviso" hidden>
-            Este formulário ainda não está conectado a um e-mail ou WhatsApp.
-            Configure o envio antes de publicar o site (veja o README da pasta site/).
-          </p>
-        </form>
       </div>
     </section>
   </main>

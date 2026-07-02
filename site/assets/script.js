@@ -18,7 +18,9 @@ nav.querySelectorAll("a").forEach((link) => {
 const form = document.getElementById("formContato");
 const aviso = document.getElementById("formAviso");
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  aviso.hidden = false;
-});
+if (form) {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    aviso.hidden = false;
+  });
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato — MGR Atacado e Varejo</title>
+  <meta name="description" content="Fale com a MGR Atacado e Varejo: WhatsApp, telefone, e-mail e endereço." />
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <header class="header" id="topo">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">MGR <span>Atacado e Varejo</span></a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="nav">
+        <a href="index.html">Início</a>
+        <a href="historia.html">Nossa História</a>
+        <a href="parceiros.html">Parceiros</a>
+        <a href="produtos.html">Produtos</a>
+        <a href="contato.html" class="nav__link--ativo">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero hero--paginas">
+      <div class="container">
+        <h1>Fale com a gente</h1>
+        <p>Tire dúvidas, peça um orçamento ou saiba mais sobre nossos produtos.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container contato__inner">
+        <div>
+          <h2 class="section__title">Contato</h2>
+          <ul class="contato__lista">
+            <li><strong>WhatsApp:</strong> <a href="https://wa.me/55SEUNUMEROAQUI" target="_blank" rel="noopener">(XX) XXXXX-XXXX</a></li>
+            <li><strong>Telefone:</strong> (XX) XXXX-XXXX</li>
+            <li><strong>E-mail:</strong> <a href="mailto:contato@mgratacado.com.br">contato@mgratacado.com.br</a></li>
+            <li><strong>Endereço:</strong> Rua Exemplo, 123 — Cidade/UF</li>
+            <li><strong>Horário:</strong> Seg. a Sex., 8h às 18h</li>
+          </ul>
+        </div>
+
+        <form class="form" id="formContato">
+          <label>
+            Nome
+            <input type="text" name="nome" required />
+          </label>
+          <label>
+            E-mail ou telefone
+            <input type="text" name="contato" required />
+          </label>
+          <label>
+            Mensagem
+            <textarea name="mensagem" rows="4" required></textarea>
+          </label>
+          <button type="submit" class="btn btn--primary">Enviar mensagem</button>
+          <p class="form__aviso" id="formAviso" hidden>
+            Este formulário ainda não está conectado a um e-mail ou WhatsApp.
+            Configure o envio antes de publicar o site (veja o README da pasta site/).
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>&copy; <span id="ano"></span> MGR Atacado e Varejo. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/55SEUNUMEROAQUI"
+    target="_blank"
+    rel="noopener"
+    aria-label="Falar no WhatsApp"
+  >WhatsApp</a>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
