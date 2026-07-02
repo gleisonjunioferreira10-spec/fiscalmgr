@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MGR Atacado e Varejo</title>
+  <meta name="description" content="MGR Atacado e Varejo — preços de atacado e varejo, qualidade e confiança para o seu negócio." />
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <header class="header" id="topo">
+    <div class="container header__inner">
+      <a href="#topo" class="logo">MGR <span>Atacado e Varejo</span></a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="nav">
+        <a href="#sobre">Sobre</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero__inner">
+        <h1>Atacado e varejo com <span>preço justo</span> e confiança</h1>
+        <p>
+          A MGR Atacado e Varejo atende lojistas, comércios e consumidores finais
+          com variedade de produtos, bom atendimento e condições especiais para quem compra em quantidade.
+        </p>
+        <div class="hero__actions">
+          <a href="#contato" class="btn btn--primary">Fale conosco</a>
+          <a href="#produtos" class="btn btn--outline">Ver produtos</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre" class="section">
+      <div class="container">
+        <h2 class="section__title">Sobre a MGR</h2>
+        <p class="section__text">
+          A MGR Atacado e Varejo é uma empresa dedicada a oferecer produtos de qualidade
+          com o melhor custo-benefício, atendendo tanto quem compra para revender quanto
+          quem compra para uso próprio. Nosso compromisso é com a variedade, o preço justo
+          e um atendimento próximo do cliente.
+        </p>
+        <!-- Edite este texto com a história e o diferencial real da sua empresa. -->
+      </div>
+    </section>
+
+    <section id="diferenciais" class="section section--alt">
+      <div class="container">
+        <h2 class="section__title">Por que comprar com a gente</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Preços de atacado</h3>
+            <p>Condições especiais para compras em maior quantidade.</p>
+          </div>
+          <div class="card">
+            <h3>Também vendemos no varejo</h3>
+            <p>Você não precisa comprar em grande quantidade para ser nosso cliente.</p>
+          </div>
+          <div class="card">
+            <h3>Variedade de produtos</h3>
+            <p>Um mix de produtos pensado para atender o seu negócio ou sua casa.</p>
+          </div>
+          <div class="card">
+            <h3>Atendimento próximo</h3>
+            <p>Falamos diretamente com você para entender o que precisa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="produtos" class="section">
+      <div class="container">
+        <h2 class="section__title">Nossos produtos</h2>
+        <p class="section__text">
+          <!-- Substitua os itens abaixo pelas categorias reais de produtos da MGR. -->
+          Trabalhamos com uma variedade de produtos para atender lojistas e clientes finais.
+          Entre em contato para consultar o catálogo completo e a disponibilidade.
+        </p>
+        <div class="cards">
+          <div class="card">
+            <h3>Categoria 1</h3>
+            <p>Descreva aqui um grupo de produtos que vocês vendem.</p>
+          </div>
+          <div class="card">
+            <h3>Categoria 2</h3>
+            <p>Descreva aqui outro grupo de produtos que vocês vendem.</p>
+          </div>
+          <div class="card">
+            <h3>Categoria 3</h3>
+            <p>Descreva aqui outro grupo de produtos que vocês vendem.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="section section--alt">
+      <div class="container contato__inner">
+        <div>
+          <h2 class="section__title">Fale com a gente</h2>
+          <p class="section__text">
+            Tire dúvidas, peça um orçamento ou saiba mais sobre nossos produtos.
+          </p>
+          <ul class="contato__lista">
+            <li><strong>WhatsApp:</strong> <a href="https://wa.me/55SEUNUMEROAQUI" target="_blank" rel="noopener">(XX) XXXXX-XXXX</a></li>
+            <li><strong>Telefone:</strong> (XX) XXXX-XXXX</li>
+            <li><strong>E-mail:</strong> <a href="mailto:contato@mgratacado.com.br">contato@mgratacado.com.br</a></li>
+            <li><strong>Endereço:</strong> Rua Exemplo, 123 — Cidade/UF</li>
+            <li><strong>Horário:</strong> Seg. a Sex., 8h às 18h</li>
+          </ul>
+        </div>
+
+        <form class="form" id="formContato">
+          <label>
+            Nome
+            <input type="text" name="nome" required />
+          </label>
+          <label>
+            E-mail ou telefone
+            <input type="text" name="contato" required />
+          </label>
+          <label>
+            Mensagem
+            <textarea name="mensagem" rows="4" required></textarea>
+          </label>
+          <button type="submit" class="btn btn--primary">Enviar mensagem</button>
+          <p class="form__aviso" id="formAviso" hidden>
+            Este formulário ainda não está conectado a um e-mail ou WhatsApp.
+            Configure o envio antes de publicar o site (veja o README da pasta site/).
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>&copy; <span id="ano"></span> MGR Atacado e Varejo. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/55SEUNUMEROAQUI"
+    target="_blank"
+    rel="noopener"
+    aria-label="Falar no WhatsApp"
+  >WhatsApp</a>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
